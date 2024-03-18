@@ -3,7 +3,7 @@ Nama : Yuni Wasita Sari<br>
 Kelas : TI 2D<br>
 Nim : 220302096<br>
 
-CodeIgniter4
+CodeIgniter4<br>
 1.**Apa itu CodeIgniter?**
   Codeigniter adalah salah satu framework untuk membuat website dengan bahasa pemrograman PHP. Codeigniter terkenal dengan konsep MVC-nya. MVC merupakan singkatan dari Model-View-Controller.<br>
   Apa itu Framework?
@@ -170,7 +170,153 @@ isikan dengan data berikut<br>
 (2,'Say it isn\'t so!','say-it-isnt-so','Scientists conclude that some programmers have a sense of humor.'),
 (3,'Caffeination, Yes!','caffeination-yes','World\'s largest coffee shop open onsite nested coffee shop for staff only.');
 ```
-- pada file.env bagian database hapus tanda'#' dan ganti nama database menjadi 'ci4tutorial' dan pada bagian password dikosongkan.<br>
+- pada file.env bagian database hapus tanda **'#'** dan ganti nama database menjadi **'ci4tutorial'** dan pada bagian password dikosongkan.<br>
+![image](https://github.com/yuniwasitasari/yuniwasitasari/assets/134575605/988d5e73-9b45-462c-a99d-1db550223b43)<br>
+- buat NewsModels<Br>
+buka **app/Models** lalu buat file baru bernama **NewsModel.php** dan ketikkan kode di bawah ini.<br>
+```
+<?php
+
+namespace App\Models;
+
+use CodeIgniter\Model;
+
+class NewsModel extends Model
+{
+    protected $table = 'news';
+}
+```
+pada method getNews di model NewsModel tambahkan kode berikut:<br>
+```
+public function getNews($slug = false)
+    {
+        if ($slug === false) {
+            return $this->findAll();
+        }
+
+        return $this->where(['slug' => $slug])->first();
+    }
+```
+- menambahkan perintah routing<br>
+```
+$routes->get('news', [News::class, 'index']);           
+$routes->get('news/(:segment)', [News::class, 'show']); 
+```
+- membuat controller baru di **app/Controllers/News.php**<br>
+```
+<?php
+
+namespace App\Controllers;
+
+use App\Models\NewsModel;
+
+class News extends BaseController
+{
+    public function index()
+    {
+        $model = model(NewsModel::class);
+
+        $data['news'] = $model->getNews();
+    }
+
+    public function show($slug = null)
+    {
+        $model = model(NewsModel::class);
+
+        $data['news'] = $model->getNews($slug);
+    }
+}
+```
+- melengkapi controller News pada method index<br>
+```
+<?php
+
+namespace App\Controllers;
+
+use App\Models\NewsModel;
+
+class News extends BaseController
+{
+    public function index()
+    {
+        $model = model(NewsModel::class);
+
+        $data = [
+            'news'  => $model->getNews(),
+            'title' => 'News archive',
+        ];
+
+        return view('templates/header', $data)
+            . view('news/index')
+            . view('templates/footer');
+    }
+
+    // ...
+}
+```
+- buat file pada **app/Views/news/index.php** dan tambahkan kode berikut:<br>
+```
+<h2><?= esc($title) ?></h2>
+
+<?php if (! empty($news) && is_array($news)): ?>
+
+    <?php foreach ($news as $news_item): ?>
+
+        <h3><?= esc($news_item['title']) ?></h3>
+
+        <div class="main">
+            <?= esc($news_item['body']) ?>
+        </div>
+        <p><a href="/news/<?= esc($news_item['slug'], 'url') ?>">View article</a></p>
+
+    <?php endforeach ?>
+
+<?php else: ?>
+
+    <h3>No News</h3>
+
+    <p>Unable to find any news for you.</p>
+
+<?php endif ?>
+```
+- lengkapi controller News pada method show<br>
+```
+<?php
+
+namespace App\Controllers;
+
+use App\Models\NewsModel;
+use CodeIgniter\Exceptions\PageNotFoundException;
+
+class News extends BaseController
+{
+    // ...
+
+    public function show($slug = null)
+    {
+        $model = model(NewsModel::class);
+
+        $data['news'] = $model->getNews($slug);
+
+        if (empty($data['news'])) {
+            throw new PageNotFoundException('Cannot find the news item: ' . $slug);
+        }
+
+        $data['title'] = $data['news']['title'];
+
+        return view('templates/header', $data)
+            . view('news/view')
+            . view('templates/footer');
+    }
+}
+```
+- buat tampilan atau view di **app/Views/news/view.php**<br>
+```
+<h2><?= esc($news['title']) ?></h2>
+<p><?= esc($news['body']) ?></p>
+```
+- pada browser ketikkan localhost:8080/news<br>
+
 
   
 
