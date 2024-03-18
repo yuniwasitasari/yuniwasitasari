@@ -41,6 +41,7 @@ CodeIgniter4
    setelah prosesnya selesai, kita akan mendapatkan folder baru dengan nama _project-root_.<br>
    buka folder yuniwasitasari menggunakan VS Code.<br>
    buka terminal lalu ketikkan ```_php spark serve_```. perintah ini akan menjalankan server CI4 pada port 8080, lalu buka web beowser dan ketikkan alamat http://localhost:8080<br>
+   
 
 
 
