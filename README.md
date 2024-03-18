@@ -4,8 +4,7 @@ Kelas : TI 2D<br>
 Nim : 220302096<br>
 
 CodeIgniter4
-
-1. **Apa itu CodeIgniter?**
+1.**Apa itu CodeIgniter?**
   Codeigniter adalah salah satu framework untuk membuat website dengan bahasa pemrograman PHP. Codeigniter terkenal dengan konsep MVC-nya. MVC merupakan singkatan dari Model-View-Controller.<br>
   Apa itu Framework?
   framework dalam bahasa indonesi artinya kerangka kerja.
@@ -55,8 +54,9 @@ CodeIgniter4
    ```
    app.baseURL = 'http://localhost:8080'
    ```
+   
 3. **Build Your Application**<br>
-   a.) Static Pages. buka file rute yang terletak di **app/config/Routes.php**<br>
+   a.) **Static Pages.** buka file rute yang terletak di **app/config/Routes.php**<br>
 ```
 <?php
 
@@ -150,6 +150,29 @@ class Pages extends BaseController
 }
 ```
 - Running the app<br>
+kunjungi localhost:8080/home untuk mengecek apakah berhasil atau tidak.<br>
+![image](https://github.com/yuniwasitasari/yuniwasitasari/assets/134575605/8e9d4297-b91c-477e-a0d1-748ca66bba58)<br>
+  b. **News Section**
+- buat database dan tabel pada phpmyadmin nama database ci4tutorial.
+```
+CREATE TABLE news (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    title VARCHAR(128) NOT NULL,
+    slug VARCHAR(128) NOT NULL,
+    body TEXT NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE slug (slug)
+);
+```
+isikan dengan data berikut<br>
+```INSERT INTO news VALUES
+(1,'Elvis sighted','elvis-sighted','Elvis was sighted at the Podunk internet cafe. It looked like he was writing a CodeIgniter app.'),
+(2,'Say it isn\'t so!','say-it-isnt-so','Scientists conclude that some programmers have a sense of humor.'),
+(3,'Caffeination, Yes!','caffeination-yes','World\'s largest coffee shop open onsite nested coffee shop for staff only.');
+```
+- pada file.env bagian database hapus tanda'#' dan ganti nama database menjadi 'ci4tutorial' dan pada bagian password dikosongkan.<br>
+
+  
 
 
 
