@@ -115,6 +115,8 @@ class Pages extends BaseController
 ```
 - adding logic to the controller<br>
 Buat home.php dan about.php di **app/View/pages**. di dalam file tersebut isikan beberapa teks misalkan Hello World!!.<br>
+![image](https://github.com/yuniwasitasari/yuniwasitasari/assets/134575605/63b06bea-c334-4adb-b34d-ad8e0e425be1)
+
 
 
 
