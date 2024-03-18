@@ -115,7 +115,42 @@ class Pages extends BaseController
 ```
 - adding logic to the controller<br>
 Buat home.php dan about.php di **app/View/pages**. di dalam file tersebut isikan beberapa teks misalkan Hello World!!.<br>
-![image](https://github.com/yuniwasitasari/yuniwasitasari/assets/134575605/63b06bea-c334-4adb-b34d-ad8e0e425be1)
+![image](https://github.com/yuniwasitasari/yuniwasitasari/assets/134575605/63b06bea-c334-4adb-b34d-ad8e0e425be1)<br>
+![image](https://github.com/yuniwasitasari/yuniwasitasari/assets/134575605/b667b221-9592-4407-8281-4079d2fd9dee)<br>
+- Lengkapi method view pada controller Pages<br>
+```
+<?php
+
+namespace App\Controllers;
+
+use CodeIgniter\Exceptions\PageNotFoundException;
+
+class Pages extends BaseController
+{
+    public function index()
+    {
+        return view('welcome_message');
+       
+    }
+
+    public function view($page = 'home')
+    {
+        if (! is_file(APPPATH . 'Views/pages/' . $page . '.php')) {
+            // Whoops, we don't have a page for that!
+            throw new PageNotFoundException($page);
+        }
+
+        $data['title'] = ucfirst($page); // Capitalize the first letter
+
+        return view('templates/header', $data)
+            . view('pages/' . $page)
+            . view('templates/footer');
+    }
+
+}
+```
+- Running the app<br>
+
 
 
 
