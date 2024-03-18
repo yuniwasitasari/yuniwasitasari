@@ -152,7 +152,7 @@ class Pages extends BaseController
 - Running the app<br>
 kunjungi localhost:8080/home untuk mengecek apakah berhasil atau tidak.<br>
 ![image](https://github.com/yuniwasitasari/yuniwasitasari/assets/134575605/8e9d4297-b91c-477e-a0d1-748ca66bba58)<br>
-  b. **News Section**
+  b.) **News Section**
 - buat database dan tabel pada phpmyadmin nama database ci4tutorial.
 ```
 CREATE TABLE news (
@@ -197,7 +197,7 @@ public function getNews($slug = false)
         return $this->where(['slug' => $slug])->first();
     }
 ```
-- menambahkan perintah routing<br>
+- menambahkan perintah routing di **app/Config/Routes.php**<br>
 ```
 $routes->get('news', [News::class, 'index']);           
 $routes->get('news/(:segment)', [News::class, 'show']); 
@@ -315,7 +315,156 @@ class News extends BaseController
 <h2><?= esc($news['title']) ?></h2>
 <p><?= esc($news['body']) ?></p>
 ```
-- pada browser ketikkan localhost:8080/news<br>
+- pada browser ketikkan **localhost:8080/news**<br>
+![image](https://github.com/yuniwasitasari/yuniwasitasari/assets/134575605/04845ff1-fac8-4357-9dcf-2899471a4e40)<br>
+
+c.) **Create News Section**
+- aktifkan filter CSRF di file app/Config/Filter.php<br>
+```
+<?php
+
+namespace Config;
+
+use CodeIgniter\Config\BaseConfig;
+
+class Filters extends BaseConfig
+{
+    // ...
+
+    public $methods = [
+        'post' => ['csrf'],
+    ];
+
+    // ...
+}
+```
+- menambahkan perintah routing di **app/Config/Routes.php**<br>
+```
+<?php
+
+// ...
+
+use App\Controllers\News;
+use App\Controllers\Pages;
+
+$routes->get('news', [News::class, 'index']);
+$routes->get('news/new', [News::class, 'new']); // Add this line
+$routes->post('news', [News::class, 'create']); // Add this line
+$routes->get('news/(:segment)', [News::class, 'show']);
+
+$routes->get('pages', [Pages::class, 'index']);
+$routes->get('(:segment)', [Pages::class, 'view']);
+```
+- create a form di app/Views/news/create.php<br>
+```
+<h2><?= esc($title) ?></h2>
+
+<?= session()->getFlashdata('error') ?>
+<?= validation_list_errors() ?>
+
+<form action="/news" method="post">
+    <?= csrf_field() ?>
+
+    <label for="title">Title</label>
+    <input type="input" name="title" value="<?= set_value('title') ?>">
+    <br>
+
+    <label for="body">Text</label>
+    <textarea name="body" cols="45" rows="4"><?= set_value('body') ?></textarea>
+    <br>
+
+    <input type="submit" name="submit" value="Create news item">
+</form>
+```
+- pada controller News tambahkan method new untuk menampilkan formulir<br>
+```
+<?php
+
+namespace App\Controllers;
+
+use App\Models\NewsModel;
+use CodeIgniter\Exceptions\PageNotFoundException;
+
+class News extends BaseController
+{
+    // ...
+
+    public function new()
+    {
+        helper('form');
+
+        return view('templates/header', ['title' => 'Create a news item'])
+            . view('news/create')
+            . view('templates/footer');
+    }
+}
+```
+- tambahkan method create pada controller News<br>
+```
+<?php
+
+namespace App\Controllers;
+
+use App\Models\NewsModel;
+use CodeIgniter\Exceptions\PageNotFoundException;
+
+class News extends BaseController
+{
+    // ...
+
+    public function create()
+    {
+        helper('form');
+
+        $data = $this->request->getPost(['title', 'body']);
+
+        // Checks whether the submitted data passed the validation rules.
+        if (! $this->validateData($data, [
+            'title' => 'required|max_length[255]|min_length[3]',
+            'body'  => 'required|max_length[5000]|min_length[10]',
+        ])) {
+            // The validation fails, so returns the form.
+            return $this->new();
+        }
+
+        // Gets the validated data.
+        $post = $this->validator->getValidated();
+
+        $model = model(NewsModel::class);
+
+        $model->save([
+            'title' => $post['title'],
+            'slug'  => url_title($post['title'], '-', true),
+            'body'  => $post['body'],
+        ]);
+
+        return view('templates/header', ['title' => 'Create a news item'])
+            . view('news/success')
+            . view('templates/footer');
+    }
+}
+```
+- membuat halaman seccess di **app/Views/news/success.php**<br>
+```
+<p>News item created successfully.</p>
+```
+- pada **app/models/newsmodels.php** tambahkan kode berikut :<br>
+```
+<?php
+
+namespace App\Models;
+
+use CodeIgniter\Model;
+
+class NewsModel extends Model
+{
+    protected $table = 'news';
+
+    protected $allowedFields = ['title', 'slug', 'body'];
+}
+```
+- pada browser ketikkan **localhost:8080/news/new**<br>
+
 
 
   
