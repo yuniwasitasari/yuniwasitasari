@@ -26,14 +26,15 @@ CodeIgniter4
    Codeigniter memiliki dua metode instalasi yang didukung : download manual atau menggunakan composer.<br>
    a. Manual<br>
    kunjungi sistus resmi www.codeigniter.com<br>
-   
-
+   ![image](https://github.com/yuniwasitasari/yuniwasitasari/assets/134575605/8e727eea-4de2-43ed-948f-6ec12748907e)
    ekstrak file ZIP Codeigniter ke htdocs.<br>
+   
    b. composer<br>
    untuk menginstal CI4 dengn composer ketikkan perintah berikut ini :
    ```
    _composer create-project codeigniter4/appstarter project-root_.<br>
    ```
+   
    ada beberapa argumen yang kita berikan pada perintah ini :<br>
    -_create-project_ adalah perintah untuk membuat proyek baru dengan komposer.<br>
    -_codeigniter4/appstarter_ adalah file CI yang akan di-download.<br>
