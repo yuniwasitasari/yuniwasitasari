@@ -3,8 +3,8 @@ Nama : Yuni Wasita Sari<br>
 Kelas : TI 2D<br>
 Nim : 220302096<br>
 
-CodeIgniter4<br>
-1.**Apa itu CodeIgniter?**
+CodeIgniter4 <br>
+**1.Apa itu CodeIgniter?**
   Codeigniter adalah salah satu framework untuk membuat website dengan bahasa pemrograman PHP. Codeigniter terkenal dengan konsep MVC-nya. MVC merupakan singkatan dari Model-View-Controller.<br>
   Apa itu Framework?
   framework dalam bahasa indonesi artinya kerangka kerja.
@@ -21,7 +21,7 @@ CodeIgniter4<br>
    - SQLSRV<br>
    - Oracle Database melalui OCI8<br>
 
-2. **Installation**
+**2. Installation**
    Codeigniter memiliki dua metode instalasi yang didukung : download manual atau menggunakan composer.<br>
    **a. Manual<br>**
    kunjungi sistus resmi www.codeigniter.com<br>
@@ -55,8 +55,8 @@ CodeIgniter4<br>
    app.baseURL = 'http://localhost:8080'
    ```
    
-3. **Build Your Application**<br>
-   a.) **Static Pages.** buka file rute yang terletak di **app/config/Routes.php**<br>
+**3. Build Your Application**<br>
+**a.) Static Pages.** buka file rute yang terletak di **app/config/Routes.php**<br>
 ```
 <?php
 
@@ -152,7 +152,7 @@ class Pages extends BaseController
 - Running the app<br>
 kunjungi localhost:8080/home untuk mengecek apakah berhasil atau tidak.<br>
 ![image](https://github.com/yuniwasitasari/yuniwasitasari/assets/134575605/8e9d4297-b91c-477e-a0d1-748ca66bba58)<br>
-  b.) **News Section**
+**b.) News Section**
 - buat database dan tabel pada phpmyadmin nama database ci4tutorial.
 ```
 CREATE TABLE news (
@@ -318,7 +318,7 @@ class News extends BaseController
 - pada browser ketikkan **localhost:8080/news**<br>
 ![image](https://github.com/yuniwasitasari/yuniwasitasari/assets/134575605/04845ff1-fac8-4357-9dcf-2899471a4e40)<br>
 
-c.) **Create News Section**
+**c.) Create News Section**
 - aktifkan filter CSRF di file app/Config/Filter.php<br>
 ```
 <?php
@@ -464,7 +464,64 @@ class NewsModel extends Model
 }
 ```
 - pada browser ketikkan **localhost:8080/news/new**<br>
+![image](https://github.com/yuniwasitasari/yuniwasitasari/assets/134575605/794a6590-ea40-4222-9881-f9ee04c23c27)<br>
 
+**4.Codeigniter4 Overview**
+a.)**Model, View, and Controller**<br>
+- model mengelola data aplikasi dan membantu menegakkan aturan bisnis khusus yang mungkin diperlukan aplikasi.<br>
+- view adalah file sederhana dengan sedikit atau tanpa logika, yang menampilkan informasi kepada pengguna.<br>
+- controller bertindak sebagai kode perekat menyusun data bolak balik antara tampilan dan penyimpanan data.<br>
+- komponen<br>
+**view**<br>
+view umumnya disimpan di **app/Views**<br>
+**model**<br>
+model biasanya disimpan di **app/Models**<br>
+**Controller**<br>
+controller biasanya disimpan di **app/controllers**<br>
+b.)**konfigirasi**<br>
+konfigurasi awal dilakukan di **app/Config/Autoload.php** berikut kodenya:<br>
+```
+<?php
+
+namespace Config;
+
+use CodeIgniter\Config\AutoloadConfig;
+
+class Autoload extends AutoloadConfig
+{
+    // ...
+    public $psr4 = [
+        APP_NAMESPACE => APPPATH, // For custom app namespace
+        'Config'      => APPPATH . 'Config',
+    ];
+
+    // ...
+}
+```
+- **Application Namespace**
+- mengubah namespace dengan mengedit file **app/Config/Constants.php**<br>
+```
+defined('APP_NAMESPACE') || define('APP_NAMESPACE', 'App');
+```
+- **Classmap**<br>
+dapat menggunakan classmap untuk menautkan ke perpustakaan pihak ketiga yang tidak diberi spasi nama<br>
+```
+<?php
+
+namespace Config;
+
+use CodeIgniter\Config\AutoloadConfig;
+
+class Autoload extends AutoloadConfig
+{
+    // ...
+    public $classmap = [
+        'Markdown' => APPPATH . 'ThirdParty/markdown.php',
+    ];
+
+    // ...
+}
+```
 
 
   
