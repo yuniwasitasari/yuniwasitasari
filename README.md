@@ -34,14 +34,16 @@ CodeIgniter4
    ```
    _composer create-project codeigniter4/appstarter project-root_.<br>
    ```
-   
+   ![image](https://github.com/yuniwasitasari/yuniwasitasari/assets/134575605/21d87cb9-0eae-4d44-9e79-c7bc34873c12)<br>
    ada beberapa argumen yang kita berikan pada perintah ini :<br>
    -_create-project_ adalah perintah untuk membuat proyek baru dengan komposer.<br>
    -_codeigniter4/appstarter_ adalah file CI yang akan di-download.<br>
    -_project-root_ adalah nama proyek yang akan dibuat. <br>
    setelah prosesnya selesai, kita akan mendapatkan folder baru dengan nama _project-root_.<br>
    buka folder yuniwasitasari menggunakan VS Code.<br>
-   buka terminal lalu ketikkan ```_php spark serve_```. perintah ini akan menjalankan server CI4 pada port 8080, lalu buka web beowser dan ketikkan alamat http://localhost:8080<br>
+   buka terminal lalu ketikkan ```_php spark serve_```.<br>
+   
+   perintah ini akan menjalankan server CI4 pada port 8080, lalu buka web beowser dan ketikkan alamat http://localhost:8080<br>
    
 
 
